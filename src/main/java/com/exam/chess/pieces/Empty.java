@@ -1,14 +1,19 @@
-package com.exam.chess.model;
+package com.exam.chess.pieces;
 
-import com.exam.chess.Location;
+public class Empty implements Piece {
+    private static final String EXPRESSION = " ";
 
-public class Empty implements Location {
     private int x;
     private int y;
 
     public Empty(int x, int y){
         this.x = x;
         this.y = y;
+    }
+
+    @Override
+    public String expression() {
+        return EXPRESSION;
     }
 
     @Override
