@@ -1,7 +1,7 @@
 package com.exam.chess.pieces;
 
 public interface Piece {
-    String expression();
+    char expression();
     void movable();
     void move(int x, int y);
 

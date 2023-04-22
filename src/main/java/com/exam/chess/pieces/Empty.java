@@ -1,18 +1,16 @@
 package com.exam.chess.pieces;
 
 public class Empty implements Piece {
-    private static final String EXPRESSION = " ";
+    private static final char EXPRESSION = 0;
 
-    private int x;
-    private int y;
+    private Position position;
 
-    public Empty(int x, int y){
-        this.x = x;
-        this.y = y;
+    public Empty(Position position){
+        this.position = position;
     }
 
     @Override
-    public String expression() {
+    public char expression() {
         return EXPRESSION;
     }
 

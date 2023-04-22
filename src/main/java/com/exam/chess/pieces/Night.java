@@ -3,19 +3,21 @@ package com.exam.chess.pieces;
 public class Night implements Piece {
 
     private Side side;
-    private String expression;
-    private int x;
-    private int y;
+    private char expression;
+    private Position position;
 
-    public Night(Side side, int x, int y){
+    public Night(Position position){
+        this.position = position;
+    }
+
+    public Night(Side side, Position position){
         this.side = side;
-        this.expression = side.equals(Side.WHITE) ? "♘" : "♞";
-        this.x = x;
-        this.y = y;
+        this.expression = side.getExpression("NIGHT");
+        this.position = position;
     }
 
     @Override
-    public String expression() {
+    public char expression() {
         return expression;
     }
 
