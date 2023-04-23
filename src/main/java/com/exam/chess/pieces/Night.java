@@ -23,8 +23,53 @@ public class Night extends AbstractPiece {
     }
 
     @Override
-    public void move(Piece[][] board, Position position) {
+    public void move(Piece[][] board, Position target) {
+        if(position.equals(target))
+            throw new IllegalArgumentException("동일한 위치입니다.");
 
+        int diffX = target.getX() - position.getX();
+        int diffY = target.getY() - position.getY();
+
+        if(movable(diffX, diffY)){
+            Piece piece = board[target.getY()][target.getX()];
+            if(piece.expression() == Character.MIN_VALUE){
+
+            }else if(!piece.getSide().equals(side)){
+
+            }else{
+
+            }
+        }
+
+    }
+
+    private boolean movable(int diffX, int diffY){
+
+        if(diffX == -2 && diffY == -1){
+            return true;
+        }
+        if(diffX == -2 && diffY == 1){
+            return true;
+        }
+        if(diffX == -1 && diffY == 2){
+            return true;
+        }
+        if(diffX == 1 && diffY == 2){
+            return true;
+        }
+        if(diffX == 2 && diffY == 1){
+            return true;
+        }
+        if(diffX == 2 && diffY == -1){
+            return true;
+        }
+        if(diffX == -1 && diffY == -2){
+            return true;
+        }
+        if(diffX == 1 && diffY == -2){
+            return true;
+        }
+        return false;
     }
 
     @Override

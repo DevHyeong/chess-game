@@ -42,9 +42,7 @@ public class Rook extends AbstractPiece {
         }
 
         if(movable(board, target)){
-            board[position.getY()][position.getX()] = new Empty(position);
-            position = position(target.getX(), target.getY());
-            board[target.getY()][target.getX()] = this;
+            move(board, position, target);
             return;
         }
         throw new IllegalArgumentException("올바르지 못한 값을 입력하였습니다.");
