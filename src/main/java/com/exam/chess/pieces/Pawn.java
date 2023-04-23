@@ -1,10 +1,6 @@
 package com.exam.chess.pieces;
 
-public class Pawn implements Piece {
-
-    private Side side;
-    private char expression;
-    private Position position;
+public class Pawn extends AbstractPiece{
 
     public Pawn(Position position){
         this.position = position;
@@ -22,13 +18,24 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public void movable() {
+    public void movable(Piece[][] board) {
+        if(position.getY() - 2 < 0 || position.getY() + 2 > 7){
+
+        }
+
+
+
 
     }
 
     @Override
-    public void move(int x, int y) {
+    public void move(Piece[][] board, Position position) {
 
+    }
+
+    @Override
+    public Position getPosition() {
+        return position;
     }
 
 

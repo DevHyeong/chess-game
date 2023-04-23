@@ -1,10 +1,6 @@
 package com.exam.chess.pieces;
 
-public class Queen implements Piece {
-
-    private Side side;
-    private char expression;
-    private Position position;
+public class Queen extends AbstractPiece{
 
     public Queen(Position position){
         this.position = position;
@@ -22,12 +18,17 @@ public class Queen implements Piece {
     }
 
     @Override
-    public void movable() {
+    public void movable(Piece[][] board) {
 
     }
 
     @Override
-    public void move(int x, int y) {
+    public void move(Piece[][] board, Position position) {
 
+    }
+
+    @Override
+    public Position getPosition() {
+        return position;
     }
 }

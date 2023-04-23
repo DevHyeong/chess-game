@@ -2,15 +2,18 @@ package com.exam.chess.model;
 
 import com.exam.chess.pieces.*;
 
+import java.util.Scanner;
 import java.util.stream.IntStream;
 
 import static com.exam.chess.pieces.Position.position;
 
 public class Game {
     public static final int START_ROW = 0;
+    public static final int START_COL = 0;
     public static final int ROW_COUNT = 8;
     public static final int COL_COUNT = 8;
 
+    private int turn;
     private Piece[][] board = new Piece[ROW_COUNT][COL_COUNT];
     private Player player1;
     private Player player2;
@@ -31,28 +34,56 @@ public class Game {
         this.player1 = player1;
         this.player2 = player2;
 
+        setPieces(this.player1);
+        setPieces(this.player2);
+    }
 
+    private void setPieces(Player player){
+        for(Piece p : player.getPieces()){
+            int x = p.getPosition().getX();
+            int y = p.getPosition().getY();
+            board[y][x] = p;
+        }
+    }
 
-        player2.addPiece(new Rook(position(0, 7)));
-        player2.addPiece(new Night(position(1, 7)));
-        player2.addPiece(new Bishop(position(2, 7)));
-        player2.addPiece(new Queen(position(3, 7)));
-        player2.addPiece(new King(position(4, 7)));
-        player2.addPiece(new Bishop(position(5, 7)));
-        player2.addPiece(new Night(position(6, 7)));
-        player2.addPiece(new Rook(position(7, 7)));
+    private boolean isContinue(){
+        return findKing(player1) && findKing(player2);
+    }
 
-        IntStream.range(0, 7)
-                .forEach(i->  player2.addPiece(new Pawn(position(i, 6))));
+    private boolean findKing(Player player){
+        return player.getPieces()
+                .stream()
+                .map(e-> e.expression())
+                .findFirst()
+                .isPresent();
+    }
 
+    public void printBoard(){
+        for(int i = 0; i < ROW_COUNT; i++){
+            for(int j = 0; j < COL_COUNT; j++){
+                System.out.print(board[i][j].expression());
+            }
+            System.out.println("");
+        }
     }
 
     public void start(){
 
+        while(isContinue()){
+            Scanner scanner = new Scanner(System.in);
 
+            if(turn == 1){
+                player1.execute(scanner, board);
 
+            }
 
+            if(turn == 2){
+                player2.execute(scanner, board);
+            }
+        }
     }
 
-
+    public Piece[][] getBoard() {
+        return board;
+    }
 }

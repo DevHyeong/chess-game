@@ -1,7 +1,7 @@
 package com.exam.chess.pieces;
 
 public class Empty implements Piece {
-    private static final char EXPRESSION = 0;
+    private static final char EXPRESSION = Character.MIN_VALUE;
 
     private Position position;
 
@@ -15,12 +15,25 @@ public class Empty implements Piece {
     }
 
     @Override
-    public void movable() {
+    public void movable(Piece[][] board) {
 
+    }
+    @Override
+    public void move(Piece[][] board, Position position) {
+
+    }
+    @Override
+    public Position getPosition() {
+        return position;
     }
 
     @Override
-    public void move(int x, int y) {
+    public Side getSide() {
+        return null;
+    }
 
+    @Override
+    public Piece getCaughtPiece() {
+        return null;
     }
 }

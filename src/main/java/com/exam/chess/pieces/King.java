@@ -1,15 +1,10 @@
 package com.exam.chess.pieces;
 
-public class King implements Piece {
-
-    private Side side;
-    private char expression;
-    private Position position;
+public class King extends AbstractPiece{
 
     public King(Position position){
         this.position = position;
     }
-
 
     public King(Side side, Position position){
         this.side = side;
@@ -23,12 +18,17 @@ public class King implements Piece {
     }
 
     @Override
-    public void movable() {
+    public void movable(Piece[][] board) {
 
     }
 
     @Override
-    public void move(int x, int y) {
+    public void move(Piece[][] board, Position position) {
 
+    }
+
+    @Override
+    public Position getPosition() {
+        return position;
     }
 }
