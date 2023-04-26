@@ -15,10 +15,6 @@ public class Empty implements Piece {
     }
 
     @Override
-    public void movable(Piece[][] board) {
-
-    }
-    @Override
     public void move(Piece[][] board, Position position) {
 
     }
@@ -36,4 +32,5 @@ public class Empty implements Piece {
     public Piece getCaughtPiece() {
         return null;
     }
+
 }

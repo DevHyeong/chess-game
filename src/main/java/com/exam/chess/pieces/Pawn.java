@@ -18,17 +18,6 @@ public class Pawn extends AbstractPiece{
     }
 
     @Override
-    public void movable(Piece[][] board) {
-        if(position.getY() - 2 < 0 || position.getY() + 2 > 7){
-
-        }
-
-
-
-
-    }
-
-    @Override
     public void move(Piece[][] board, Position position) {
 
     }

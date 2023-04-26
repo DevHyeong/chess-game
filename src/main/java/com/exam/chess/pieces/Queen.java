@@ -18,11 +18,6 @@ public class Queen extends AbstractPiece{
     }
 
     @Override
-    public void movable(Piece[][] board) {
-
-    }
-
-    @Override
     public void move(Piece[][] board, Position position) {
 
     }

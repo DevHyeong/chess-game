@@ -20,7 +20,6 @@ public class Rook extends AbstractPiece {
         return expression;
     }
 
-    @Override
     public void movable(Piece[][] board) {
         int x = position.getX();
         int y = position.getY();

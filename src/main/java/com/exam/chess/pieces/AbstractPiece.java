@@ -26,6 +26,7 @@ public abstract class AbstractPiece implements Piece{
         this.caughtPiece = caughtPiece;
     }
 
+
     public void move(Piece[][] board, Position source, Position target){
         board[position.getY()][position.getX()] = new Empty(position);
         position = position(target.getX(), target.getY());
