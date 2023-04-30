@@ -1,5 +1,6 @@
 package com.exam.chess.pieces;
 
+import com.exam.chess.exception.ImmovableException;
 import com.exam.chess.model.Game;
 import com.exam.chess.model.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,7 +48,7 @@ class RookTest {
 
         Position target = position(0, 5);
         Piece piece = board[0][0];
-        assertThrows(IllegalArgumentException.class, () -> piece.move(board, target));
+        assertThrows(ImmovableException.class, () -> piece.move(board, target));
         assertThrows(IllegalArgumentException.class, () -> position(-1, 5));
         assertThrows(IllegalArgumentException.class, () -> position(0, ROW_COUNT));
     }

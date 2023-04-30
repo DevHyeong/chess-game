@@ -1,5 +1,7 @@
 package com.exam.chess.pieces;
 
+import com.exam.chess.action.Action;
+
 public class Empty implements Piece {
     private static final char EXPRESSION = Character.MIN_VALUE;
 
@@ -18,6 +20,12 @@ public class Empty implements Piece {
     public void move(Piece[][] board, Position position) {
 
     }
+
+    @Override
+    public Action movable(Piece[][] board, Position target) {
+        return null;
+    }
+
     @Override
     public Position getPosition() {
         return position;

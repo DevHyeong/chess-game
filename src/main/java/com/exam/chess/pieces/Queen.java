@@ -1,5 +1,7 @@
 package com.exam.chess.pieces;
 
+import com.exam.chess.action.Action;
+
 public class Queen extends AbstractPiece{
 
     public Queen(Position position){
@@ -18,8 +20,18 @@ public class Queen extends AbstractPiece{
     }
 
     @Override
-    public void move(Piece[][] board, Position position) {
+    public Action movable(Piece[][] board, Position target){
+        int diffX = Math.abs(target.getX() - position.getX());
+        int diffY = Math.abs(target.getY() - position.getY());
+        if(diffX == diffY){
+            return Bishop.movable(board, this, target);
+        }
 
+        if((diffX == 0 && diffY > 0) || (diffY == 0 && diffX > 0)){
+            return Rook.movable(board, this, target);
+        }
+
+        return Action.IMMOVABLE;
     }
 
     @Override

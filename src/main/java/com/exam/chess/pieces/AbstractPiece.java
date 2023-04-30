@@ -1,5 +1,6 @@
 package com.exam.chess.pieces;
 
+import com.exam.chess.action.Action;
 import com.exam.chess.model.Player;
 
 import static com.exam.chess.pieces.Position.position;
@@ -24,6 +25,7 @@ public abstract class AbstractPiece implements Piece{
 
     public void setCaughtPiece(Piece caughtPiece) {
         this.caughtPiece = caughtPiece;
+        System.out.println(caughtPiece + "를 잡았습니다.");
     }
 
 
@@ -31,6 +33,16 @@ public abstract class AbstractPiece implements Piece{
         board[position.getY()][position.getX()] = new Empty(position);
         position = position(target.getX(), target.getY());
         board[target.getY()][target.getX()] = this;
+    }
+
+    @Override
+    public void move(Piece[][] board, Position target) {
+        Action action = movable(board, target);
+        action.action(board, this, target);
+    }
+
+    public static boolean isCatchable(Piece piece, Side side){
+        return !(piece instanceof Empty) && !piece.getSide().equals(side);
     }
 
 }

@@ -1,5 +1,7 @@
 package com.exam.chess.pieces;
 
+import com.exam.chess.action.Action;
+
 import static com.exam.chess.pieces.Position.position;
 
 public class Night extends AbstractPiece {
@@ -13,32 +15,24 @@ public class Night extends AbstractPiece {
         this.expression = side.getExpression("NIGHT");
         this.position = position;
     }
-
     @Override
     public char expression() {
         return expression;
     }
-
     @Override
-    public void move(Piece[][] board, Position target) {
-        if(position.equals(target))
-            throw new IllegalArgumentException("동일한 위치입니다.");
-
+    public Action movable(Piece[][] board, Position target){
         int diffX = target.getX() - position.getX();
         int diffY = target.getY() - position.getY();
-
         if(movable(diffX, diffY)){
             Piece piece = board[target.getY()][target.getX()];
             if(piece instanceof Empty){
-                move(board, position, target);
-            }else if(!piece.getSide().equals(side)){
-                caughtPiece = piece;
-                move(board, position, target);
-            }else{
-                throw new IllegalStateException("해당 위치에 " + piece.toString());
+                return Action.MOVABLE;
+            }
+            if(isCatchable(piece, side)){
+                return Action.CATCHABLE;
             }
         }
-
+        return Action.IMMOVABLE;
     }
 
     private boolean movable(int diffX, int diffY){

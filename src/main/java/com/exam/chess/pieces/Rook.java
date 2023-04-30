@@ -1,9 +1,6 @@
 package com.exam.chess.pieces;
 
-import com.exam.chess.model.Game;
-
-import static com.exam.chess.pieces.Position.position;
-
+import com.exam.chess.action.Action;
 public class Rook extends AbstractPiece {
     public Rook(Position position){
         this.position = position;
@@ -20,77 +17,66 @@ public class Rook extends AbstractPiece {
         return expression;
     }
 
-    public void movable(Piece[][] board) {
-        int x = position.getX();
-        int y = position.getY();
-
-        while(true){
-            x = position.getX() + 1;
-
-        }
-
-        //Game.ROW_COUNT;
-        //Game.COL_COUNT;
-
-    }
-
     @Override
-    public void move(Piece[][] board, Position target) {
-        if(position.equals(target)){
-            throw new IllegalArgumentException("동일한 위치입니다.");
-        }
-
-        if(movable(board, target)){
-            move(board, position, target);
-            return;
-        }
-        throw new IllegalArgumentException("올바르지 못한 값을 입력하였습니다.");
+    public Action movable(Piece[][] board, Position target){
+        return movable(board, this, target);
     }
 
-    private boolean movable(Piece[][] board, Position target){
-        if(target.getY() - position.getY() == 0){
-            return target.getX() > position.getX() ? movableX(board, position, target)
-                    : movableX(board, target, position);
+    public static Action movable(Piece[][] board, Piece source, Position target){
+        Position position = source.getPosition();
+        int diffX = target.getX() - position.getX();
+        int diffY = target.getY() - position.getY();
 
+        if(diffY == 0){
+            return movableX(board, source, target);
         }
-        else if(target.getX() - position.getX() == 0){
-            return target.getY() > position.getY() ? movableY(board, position, target)
-                    : movableY(board, target, position);
+        else if(diffX == 0){
+            return movableY(board, source, target);
         }
-        return false;
+        return Action.IMMOVABLE;
+
     }
 
+    private static Action movableX(Piece[][] board, Piece source, Position target){
+        int diff = source.getPosition().getX() - target.getX();
+        int x = source.getPosition().getX();
+        while( x != target.getX()){
+            if(diff > 0){
+                x--;
+            }else{
+                x++;
+            }
 
-    private boolean movableX(Piece[][] board, Position source, Position target){
-        for(int i = source.getX() + 1; i <= target.getX(); i++){
-            Piece piece = board[target.getY()][i];
-            // 상대편 말을 잡았을 경우
-            if(i == target.getX() && piece.expression() != Character.MIN_VALUE) {
-                catchPiece(piece);
+            Piece piece = board[source.getPosition().getY()][x];
+            if(x == target.getX() && isCatchable(piece, source.getSide())) {
+                return Action.CATCHABLE;
             }
-            else if(piece.expression() != Character.MIN_VALUE){
-                return false;
-            }
-        }
-        return true;
-    }
-    private boolean movableY(Piece[][] board, Position source, Position target){
-        for(int i = source.getY() + 1; i <= target.getY(); i++){
-            Piece piece = board[i][target.getX()];
-            // 상대편 말을 잡았을 경우
-            if(i == target.getY() && piece.expression() != Character.MIN_VALUE) {
-                catchPiece(piece);
-            }
-            else if(piece.expression() != Character.MIN_VALUE){
-                return false;
+            if(!(piece instanceof Empty)){
+                return Action.IMMOVABLE;
             }
         }
-        return true;
-    }
-    private void catchPiece(Piece piece){
-        if(!piece.getSide().equals(side)){
-            caughtPiece = piece;
-        }
-    }
 
+        return Action.MOVABLE;
+    }
+    private static Action movableY(Piece[][] board, Piece source, Position target){
+        int diff = source.getPosition().getY() - target.getY();
+        int y = source.getPosition().getY();
+        while( y != target.getY()){
+            if(diff > 0){
+                y--;
+            }else{
+                y++;
+            }
+
+            Piece piece = board[y][source.getPosition().getX()];
+            if(isCatchable(piece, source.getSide())) {
+                return Action.CATCHABLE;
+            }
+
+            if(!(piece instanceof Empty)){
+                return Action.IMMOVABLE;
+            }
+        }
+        return Action.MOVABLE;
+    }
 }
