@@ -35,6 +35,12 @@ class QueenTest {
         queen.move(board, target2);
         assertEquals(queen, board[2][6]);
         assertEquals(true, queen.getCaughtPiece() instanceof Pawn);
+
+        Position target3 = Position.position(3, 5);
+        queen.move(board, target3);
+
+        Position target4 = Position.position(5 ,3);
+        queen.move(board, target4);
     }
 
     @Test

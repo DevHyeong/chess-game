@@ -1,7 +1,5 @@
 package com.exam.chess.pieces;
 
-import com.exam.chess.model.Game;
-
 import static com.exam.chess.model.Game.ROW_COUNT;
 import static java.lang.Integer.parseInt;
 
@@ -16,13 +14,13 @@ public class Position {
 
     public static Position position(int x, int y){
         if(x < 0 || y > ROW_COUNT - 1)
-            throw new IllegalArgumentException("범위를 벗어났습니다.");
+            throw new ArrayIndexOutOfBoundsException("범위를 벗어났습니다.");
         return new Position(x, y);
     }
 
     public static Position position(String x, String y){
         if(x == null || y == null)
-            throw new IllegalArgumentException();
+            throw new ArrayIndexOutOfBoundsException();
         return position(parseInt(x), parseInt(y));
     }
 
@@ -41,5 +39,13 @@ public class Position {
             return this.x == position.getX() && this.y == position.getY();
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 }

@@ -33,6 +33,8 @@ class PawnTest {
         assertEquals(true, board[3][0] instanceof Empty);
         assertEquals(night, pawn.getCaughtPiece());
 
+        Position target2 = Position.position(2, 5);
+        assertThrows(ImmovableException.class, () -> pawn.move(board, target2));
     }
 
     @Test
@@ -47,6 +49,14 @@ class PawnTest {
 
         Position target1 = Position.position(0, 2);
         assertThrows(ImmovableException.class, () -> pawn.move(board, target1));
-
     }
+
+    @Test
+    void testImmovableException(){
+        Piece pawn = new Pawn(Side.BLACK, Position.position(6, 1));
+        board[1][6] = pawn;
+        Position target = Position.position(5, 2);
+        assertThrows(ImmovableException.class, () -> pawn.move(board, target));
+    }
+
 }

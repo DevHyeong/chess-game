@@ -9,4 +9,7 @@ public interface Piece {
     Position getPosition();
     Side getSide();
     Piece getCaughtPiece();
+    void initCaughtPiece();
+    boolean isCaught();
+
 }

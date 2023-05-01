@@ -41,4 +41,13 @@ public class Empty implements Piece {
         return null;
     }
 
+    @Override
+    public void initCaughtPiece() {
+
+    }
+    @Override
+    public boolean isCaught() {
+        return false;
+    }
+
 }

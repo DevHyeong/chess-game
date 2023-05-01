@@ -1,5 +1,6 @@
 package com.exam.chess.model;
 
+import com.exam.chess.exception.ImmovableException;
 import com.exam.chess.factory.SimplePieceFactory;
 import com.exam.chess.pieces.*;
 
@@ -15,7 +16,9 @@ public class Player {
     private Side side;
     private List<Piece> pieces = new ArrayList<>();
 
-    private Player(Side side){
+    private Piece[][] board;
+
+    private Player(Side side, Piece[][] board){
         if(side == null)
             throw new IllegalArgumentException();
 
@@ -25,10 +28,11 @@ public class Player {
 
         this.side = side;
         this.pieces = SimplePieceFactory.createPieces(side, p);
+        this.board = board;
     }
 
-    public static Player createPlayer(Side side){
-        return new Player(side);
+    public static Player createPlayer(Side side, Piece[][] board){
+        return new Player(side, board);
     }
 
     public void addPiece(Piece piece) {
@@ -43,24 +47,27 @@ public class Player {
         this.pieces.remove(piece);
     }
 
-    public void execute(Scanner scanner, Piece[][] board){
-        System.out.println("플레이어는 움직일 말을 선택하세요");
 
-        String[] split = scanner.nextLine().split("");
-        Position position = position(split[0], split[1]);
-        Piece piece = board[position.getY()][position.getX()];
-
-        //piece가 빈값이면
-
-        System.out.println("이동할 위치를 입력하세요. 예시: ");
-        String[] move = scanner.nextLine().split("");
-        Position target = position(move[0], move[1]);
-        piece.move(board, target);
-
-        if(piece.getCaughtPiece() != null){
-
+    public void printAvailablePieces(){
+        int i = 0;
+        for(Piece p : pieces){
+            System.out.println(i + "번: " + p);
+            i++;
         }
+    }
 
+    public Piece choicePiece(int index){
+        if(index < 0 || index > this.pieces.size() - 1)
+            throw new ArrayIndexOutOfBoundsException("");
+
+        Piece piece = this.pieces.get(index);
+        System.out.println(String.format("x: %s y: %s 위치의 %s가 선택되었습니다.", piece.getPosition().getX(), piece.getPosition().getY(), piece.expression()));
+        return piece;
+    }
+
+    public void move(Piece piece, Position target){
+        System.out.println(String.format("%s를 x:%s y:%s으로 움직이겠습니다.", piece.expression(), target.getX(), target.getY()));
+        piece.move(board, target);
     }
 
     public Side getSide() {

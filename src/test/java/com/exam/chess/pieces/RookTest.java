@@ -38,7 +38,7 @@ class RookTest {
     }
 
     @Test
-    void testMoveExpectedIllegalArgumentException(){
+    void testIllegalArgumentException(){
         Piece rook = new Rook(Side.BLACK, position(0, 0));
         Piece night = new Night(Side.BLACK, position(0, 3));
         Piece pawn = new Pawn(Side.WHITE, position(0, 5));
@@ -46,10 +46,24 @@ class RookTest {
         board[3][0] = night;
         board[5][0] = pawn;
 
-        Position target = position(0, 5);
-        Piece piece = board[0][0];
-        assertThrows(ImmovableException.class, () -> piece.move(board, target));
         assertThrows(IllegalArgumentException.class, () -> position(-1, 5));
         assertThrows(IllegalArgumentException.class, () -> position(0, ROW_COUNT));
     }
+
+    @Test
+    void testImmovableException(){
+        Piece rook = new Rook(Side.BLACK, position(0, 0));
+        Piece pawn = new Pawn(Side.WHITE, position(0, 5));
+        Piece pawn1 = new Pawn(Side.WHITE, position(3, 0));
+        board[0][0] = rook;
+        board[5][0] = pawn;
+        board[0][3] = pawn1;
+
+        Position target = position(0, 6);
+        Position target1 = position(5, 0);
+
+        assertThrows(ImmovableException.class, () -> rook.move(board, target));
+        assertThrows(ImmovableException.class, () -> rook.move(board, target1));
+    }
+
 }

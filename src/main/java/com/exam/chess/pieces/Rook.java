@@ -69,7 +69,7 @@ public class Rook extends AbstractPiece {
             }
 
             Piece piece = board[y][source.getPosition().getX()];
-            if(isCatchable(piece, source.getSide())) {
+            if(y == target.getY() && isCatchable(piece, source.getSide())) {
                 return Action.CATCHABLE;
             }
 

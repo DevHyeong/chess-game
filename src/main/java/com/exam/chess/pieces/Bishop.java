@@ -27,22 +27,29 @@ public class Bishop extends AbstractPiece {
     public Action movable(Piece[][] board, Position target){
         return movable(board, this, target);
     }
-
+    /**
+     *  x = -1, y = 1
+     *  x = -1, y = -1
+     *  x = 1, y = -1
+     *  x = 1, y = 1
+     *
+     * */
     public static Action movable(Piece[][] board, Piece source, Position target){
-        int diffX = Math.abs(target.getX() - source.getPosition().getX());
-        int diffY = Math.abs(target.getY() - source.getPosition().getY());
+        int diffX = target.getX() - source.getPosition().getX();
+        int diffY = target.getY() - source.getPosition().getY();
 
-        if(diffX == diffY){
+        if(Math.abs(diffX) == Math.abs(diffY)){
             int i = 0;
             int x = source.getPosition().getX();
             int y = source.getPosition().getY();
-            int a = diffX < 0 ? -1 : 1;
+            int dx = diffX < 0 ? -1 : 1;
+            int dy = diffY < 0 ? -1 : 1;
 
-            while(i < diffX){
-                x += a;
-                y += a;
+            while(i < Math.abs(diffX)){
+                x += dx;
+                y += dy;
 
-                if(diffX - 1 == i){
+                if(Math.abs(diffX) - 1 == i){
                     Piece piece = board[y][x];
                     if(piece instanceof Empty){
                         return Action.MOVABLE;
@@ -58,6 +65,4 @@ public class Bishop extends AbstractPiece {
         }
         return Action.IMMOVABLE;
     }
-
-
 }

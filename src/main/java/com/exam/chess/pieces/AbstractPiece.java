@@ -45,4 +45,18 @@ public abstract class AbstractPiece implements Piece{
         return !(piece instanceof Empty) && !piece.getSide().equals(side);
     }
 
+    @Override
+    public void initCaughtPiece(){
+        caughtPiece = null;
+    }
+
+    @Override
+    public boolean isCaught(){
+        return caughtPiece instanceof Piece;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("piece: %s position: x: %s, y: %s", expression, position.getX(), position.getY());
+    }
 }
