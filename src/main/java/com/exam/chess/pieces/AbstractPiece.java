@@ -28,7 +28,6 @@ public abstract class AbstractPiece implements Piece{
         System.out.println(caughtPiece + "를 잡았습니다.");
     }
 
-
     public void move(Piece[][] board, Position source, Position target){
         board[position.getY()][position.getX()] = new Empty(position);
         position = position(target.getX(), target.getY());

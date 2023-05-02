@@ -1,8 +1,11 @@
 package com.exam.chess.model;
 
+import com.exam.chess.action.Command;
 import com.exam.chess.exception.ImmovableException;
 import com.exam.chess.pieces.*;
 
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -11,11 +14,6 @@ import static com.exam.chess.pieces.Side.BLACK;
 import static com.exam.chess.pieces.Side.WHITE;
 
 public class Game {
-    public static final String PRINT_BOARD = "pb";
-    public static final String PRINT_PIECES_COMMAND = "list";
-    public static final String CHOICE_PIECE_COMMAND = "select";
-    public static final String MOVE_PIECE_COMMAND = "move";
-    public static final String CANCEL_COMMAND = "b";
 
     public static final int START_ROW = 0;
     public static final int START_COL = 0;
@@ -89,10 +87,11 @@ public class Game {
 
     public void start(){
 
+        printBoard();
+        System.out.println(String.format("%s 플레이어 차례입니다.", turn));
         while(isContinue()){
             Scanner scanner = new Scanner(System.in);
             String command = scanner.nextLine();
-
             try{
                 if(turn.equals(BLACK)){
                     execute(command, player1, player2);
@@ -120,28 +119,16 @@ public class Game {
      *
      * */
     public void execute(String command, Player player, Player theOtherPlayer){
-        System.out.println(String.format("%s 플레이어 차례입니다.", player.getSide()));
         String[] split = command.split(" ");
-        if(split[0].equals(PRINT_PIECES_COMMAND))
-            player.printAvailablePieces();
-        if(split[0].equals(CHOICE_PIECE_COMMAND))
-            selectedPiece = player.choicePiece(Integer.parseInt(split[1]));
-        if(split[0].equals(MOVE_PIECE_COMMAND)){
-            Position target = position(split[1], split[2]);
-            player.move(selectedPiece, target);
-            if(selectedPiece.isCaught()){
-                theOtherPlayer.remove(selectedPiece.getCaughtPiece());
-                selectedPiece.initCaughtPiece();
-            }
-            turnOver();
-        }
-        if(split[0].equals(CANCEL_COMMAND)){
 
-        }
-        if(split[0].equals(PRINT_BOARD)){
-            printBoard();
-        }
+        Optional<Command> COMMAND = Arrays.stream(Command.values())
+                .filter(e-> e.getCommand().equals(split[0]))
+                .findFirst();
 
+        if(COMMAND.isEmpty()){
+            throw new IllegalArgumentException();
+        }
+        COMMAND.get().execute(this, player, theOtherPlayer, split);
     }
 
     public void turnOver(){
@@ -151,4 +138,13 @@ public class Game {
     public Piece[][] getBoard() {
         return board;
     }
+
+    public Piece getSelectedPiece(){
+        return this.selectedPiece;
+    }
+
+    public void setSelectedPiece(Piece selectedPiece){
+        this.selectedPiece = selectedPiece;
+    }
+
 }
