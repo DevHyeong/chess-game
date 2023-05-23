@@ -6,4 +6,10 @@ https://codesquad-yoda.medium.com/%ED%9A%A8%EA%B3%BC%EC%A0%81%EC%9C%BC%EB%A1%9C-
 영감을 받아 콘솔기반 체스게임을 만들고 있습니다.
 
 
-## 클래스 다이어그램
+## 클래스 다이어그램(초기버전)
+
+![제목 없는 다이어그램-페이지-2](https://github.com/DevHyeong/chess-game/assets/44819285/35bcb9cd-a336-400c-b78b-3141de21df92)
+
+
+
+
